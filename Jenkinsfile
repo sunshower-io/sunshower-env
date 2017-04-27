@@ -6,19 +6,19 @@ def buildNumber
 def buildSuffix    = "Final"
 def version        = "$majorVersion.$minorVersion"
 def runSystemTests = false
-def gradleTasks    = []
+def tasks= []
 
 if (env.BRANCH_NAME == "master") {
     buildNumber = env.BUILD_NUMBER
-    gradleTasks = [
-        "releaseBom",
-        "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
+    tasks = [
+        "versions:set",
+        "-DnewVersion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
     ]
 } else {
     buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
     gradleTasks = [
-        "installBillOfMaterials",
-	"artifactoryPublish"
+            "versions:set",
+            "-DnewVersion=$buildNumber"
 
     ]
 }
@@ -28,11 +28,8 @@ node('docker-registry') {
     checkout scm
 
     timeout(time: 60, unit: 'MINUTES') {
-        stage 'Gradle Build / Test'
-        sh "chmod +x gradlew"
-
         try {
-            sh "./gradlew ${gradleTasks.join(" ")}"
+            sh "mvn clean install ${tasks.join(' ')}"
         } catch (Exception e) {
             error "Failed: ${e}"
             throw (e)

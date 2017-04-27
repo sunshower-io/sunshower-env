@@ -4,7 +4,7 @@
 
     <groupId>io.hasli.env</groupId>
     <artifactId>aggregator</artifactId>
-    <version>1.0.1-141636613-FEATURE</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Hasli Environment Aggregator</name>
