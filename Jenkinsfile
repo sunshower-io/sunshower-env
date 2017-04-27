@@ -12,13 +12,15 @@ if (env.BRANCH_NAME == "master") {
     buildNumber = env.BUILD_NUMBER
     tasks = [
         "versions:set",
-        "-DnewVersion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
+        "-DnewVersion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix",
+        "-f bom"
     ]
 } else {
     buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
     gradleTasks = [
             "versions:set",
-            "-DnewVersion=$buildNumber"
+            "-DnewVersion=$buildNumber",
+            "-f bom"
 
     ]
 }
