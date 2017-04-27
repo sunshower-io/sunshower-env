@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.hasli.env</groupId>
-        <artifactId>env-imported</artifactId>
+        <artifactId>env</artifactId>
         <version>1.0.1-141636613-FEATURE</version>
         <relativePath>../</relativePath>
     </parent>
