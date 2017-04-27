@@ -2,18 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>io.hasli.env</groupId>
-        <artifactId>env</artifactId>
-        <version>1.0.1-141636613-FEATURE</version>
-        <relativePath>../</relativePath>
-    </parent>
     <groupId>io.hasli.env</groupId>
-    <artifactId>bom-imported</artifactId>
+    <artifactId>external-dependencies</artifactId>
     <version>1.0.1-141636613-FEATURE</version>
     <packaging>pom</packaging>
     <name>Hasli.io Environment BOM</name>
     <url>http://www.hasli.io</url>
+
+    <parent>
+        <groupId>io.hasli.env</groupId>
+        <artifactId>aggregator</artifactId>
+        <version>1.0.1-141636613-FEATURE</version>
+        <relativePath>../</relativePath>
+    </parent>
     <properties>
         <hamcrest.version>1.3</hamcrest.version>
         <hikari-cp.version>2.5.1</hikari-cp.version>
@@ -34,11 +35,6 @@
         <infinispan.version>8.2.4.Final</infinispan.version>
         <hibernate-search.version>5.5.4.Final</hibernate-search.version>
         <s3fs.version>1.5.2</s3fs.version>
-        <hasli-common.version>1.0.5.Final</hasli-common.version>
-        <hasli-persist.version>1.0.204.Final</hasli-persist.version>
-        <hasli-test.version>1.0.39.Final</hasli-test.version>
-        <hasli-api.version>1.0.160.Final</hasli-api.version>
-        <hasli-schemata.version>1.0.7.Final</hasli-schemata.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -51,11 +47,6 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-search-orm</artifactId>
                 <version>${hibernate-search.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.hasli.schemata</groupId>
-                <artifactId>schemata</artifactId>
-                <version>${hasli-schemata.version}</version>
             </dependency>
 
 
@@ -106,13 +97,6 @@
                 <artifactId>junit-vintage-engine</artifactId>
                 <version>${junit.vintage.version}</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.hasli.api</groupId>
-                <artifactId>bom-exported</artifactId>
-                <type>pom</type>
-                <scope>import</scope>
-                <version>${hasli-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -226,26 +210,9 @@
                 <version>${javaee-spec.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.hasli.common</groupId>
-                <artifactId>common-api</artifactId>
-                <version>${hasli-common.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.eclipse.persistence</groupId>
                 <artifactId>org.eclipse.persistence.moxy</artifactId>
                 <version>${moxy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.hasli.barometer</groupId>
-                <artifactId>bom-exported</artifactId>
-                <type>pom</type>
-                <scope>import</scope>
-                <version>${barometer.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.hasli.test</groupId>
-                <artifactId>test-persist</artifactId>
-                <version>${hasli-test.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.jclouds</groupId>
@@ -256,13 +223,6 @@
                 <groupId>org.jasypt</groupId>
                 <artifactId>jasypt</artifactId>
                 <version>${jasypt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.hasli.persist</groupId>
-                <artifactId>bom-exported</artifactId>
-                <type>pom</type>
-                <scope>import</scope>
-                <version>${hasli-persist.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
