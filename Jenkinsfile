@@ -12,15 +12,13 @@ if (env.BRANCH_NAME == "master") {
     buildNumber = env.BUILD_NUMBER
     tasks = [
         "versions:set",
-        "-DnewVersion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix",
-        "-f bom"
+        "-DnewVersion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
     ]
 } else {
     buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
     gradleTasks = [
             "versions:set",
-            "-DnewVersion=$buildNumber",
-            "-f bom"
+            "-DnewVersion=$buildNumber"
 
     ]
 }
@@ -31,7 +29,7 @@ node('docker-registry') {
 
     timeout(time: 60, unit: 'MINUTES') {
         try {
-            sh "mvn clean install ${tasks.join(' ')}"
+            sh "mvn ${tasks.join(' ')} clean install"
         } catch (Exception e) {
             error "Failed: ${e}"
             throw (e)
