@@ -26,19 +26,23 @@ if (env.BRANCH_NAME == "master") {
     buildNumber = env.BUILD_NUMBER
     buildSuffix = "Final"
     gradleTasks = [
+        "clean",
         "releaseBom",
+        "build",
         "artifactoryPublish",
         "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
     ]
 } else {
     if (buildSuffix == "FEATURE" && env.BRANCH_NAME.contains(buildNumber)) {
         gradleTasks = [
+                "clean",
                 "releaseBom",
+                "build",
                 "artifactoryPublish",
                 "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
         ]
     } else {
-        gradleTasks = ["installBillOfMaterials"]
+        gradleTasks = ["clean", "installBillOfMaterials", "build"]
         buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
     }
 }
