@@ -36,4 +36,4 @@ task wrapper(type: Wrapper) {
 
 apply from: "$rootDir/gradle/bom.gradle"
 
-defaultTasks "installBillOfMaterials", "clean", "build"
+defaultTasks "installBillOfMaterials"
