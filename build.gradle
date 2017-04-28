@@ -1,4 +1,5 @@
 
+
 /**
  * Buildscript Plugins Section
  *
@@ -8,8 +9,61 @@ buildscript {
     apply from: 'gradle/buildscript.gradle', to: buildscript
 }
 
-apply plugin: 'java'
-apply from: "$rootDir/gradle/publishing.gradle"
+
+allprojects {
+    apply plugin: 'java'
+}
+
+/**
+ * Subproject configurations
+ */
+
+subprojects {
+
+    group='io.hasli.test'
+    version = rootProject.version
+
+    apply plugin: 'nebula.optional-base'
+    apply plugin: 'nebula.provided-base'
+    apply from: "$rootDir/gradle/dependencies.gradle"
+    apply from: "$rootDir/gradle/idea.gradle"
+    apply from: "$rootDir/gradle/jacoco.gradle"
+    apply from: "$rootDir/gradle/publishing.gradle"
+    apply from: "$rootDir/gradle/test.gradle"
+
+    dependencies {
+        provided('org.apache.logging.log4j:log4j-api')
+        provided('org.apache.logging.log4j:log4j-core')
+        provided('org.jboss.spec:jboss-javaee-7.0')
+        compile('org.junit.jupiter:junit-jupiter-engine')
+        compile('org.junit.vintage:junit-vintage-engine')
+
+        [
+                'orm',
+                'context'
+        ].each{
+            provided("org.springframework:spring-$it")
+        }
+
+        provided('org.springframework:spring-context')
+        [
+                'core',
+                'config',
+                'acl',
+                'crypto',
+                'aspects',
+                'ldap'
+        ].each {
+            provided("org.springframework.security:spring-security-$it")
+        }
+        provided group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy'
+
+        testCompile("org.springframework:spring-test")
+        testCompile("org.springframework.security:spring-security-test")
+    }
+
+
+}
 
 task prepareForRelease() {
     doLast {
@@ -37,4 +91,4 @@ task wrapper(type: Wrapper) {
 
 apply from: "$rootDir/gradle/bom.gradle"
 
-defaultTasks "installBillOfMaterials"
+defaultTasks "installBillOfMaterials", "clean", "build"
