@@ -4,7 +4,7 @@
 
     <groupId>io.hasli.env</groupId>
     <artifactId>aggregator</artifactId>
-    <version>2</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Hasli Environment Aggregator</name>
@@ -16,10 +16,19 @@
     <modules>
         <module>environment</module>
         <module>external-dependencies</module>
+        <module>testing-dependencies</module>
+        <module>hasli-dependencies</module>
+        <module>persistence-dependencies</module>
     </modules>
 
 
-    <build> 
+    <repositories>
+        <repository>
+            <id>hasli-repo</id>
+            <url>http://repo.hasli.io/artifactory/libs-release-local</url>
+        </repository>
+    </repositories>
+    <build>
         <pluginManagement> 
             <plugins> 
                 <plugin> 
