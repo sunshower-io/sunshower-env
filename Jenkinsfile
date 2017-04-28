@@ -29,7 +29,7 @@ node('docker-registry') {
 
     timeout(time: 60, unit: 'MINUTES') {
         try {
-            sh "mvn ${tasks.join(' ')} clean install"
+            sh "mvn ${tasks.join(' ')} clean install publish"
         } catch (Exception e) {
             error "Failed: ${e}"
             throw (e)
