@@ -9,14 +9,6 @@ ext {
 }
 
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
-
 
 artifactory {
     if (project.hasProperty('artifactory_user') &&
