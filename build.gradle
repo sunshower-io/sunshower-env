@@ -1,5 +1,4 @@
 
-
 /**
  * Buildscript Plugins Section
  *
@@ -8,6 +7,8 @@
 buildscript {
     apply from: 'gradle/buildscript.gradle', to: buildscript
 }
+
+apply plugin: 'java'
 apply from: "$rootDir/gradle/publishing.gradle"
 
 task prepareForRelease() {
