@@ -11,18 +11,12 @@ buildscript {
 
 
 allprojects {
-    apply plugin: 'java'
-}
-
-/**
- * Subproject configurations
- */
-
-subprojects {
 
     group='io.hasli.test'
     version = rootProject.version
+    apply plugin: 'java'
 
+    artifactory_contextUrl=http\://repo.hasli.io/artifactory
     apply plugin: 'nebula.optional-base'
     apply plugin: 'nebula.provided-base'
     apply from: "$rootDir/gradle/dependencies.gradle"
