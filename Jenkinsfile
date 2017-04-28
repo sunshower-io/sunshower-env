@@ -1,40 +1,87 @@
 #!/usr/bin/env groovy
 
+/**
+ * Process for publishing FEATURE builds to artifactory
+ *
+ * 1. feature branch must contain an identifier that matches the buildNumber
+ * 2. buildSuffix must be set to FEATURE
+ * 3. builds will only publish FEATURE builds from feature branches, master must contain buildSuffix set to 'Final'
+ *
+ * ex.) Branch Name = feature-12345/some-branch
+ *      ...
+ *      buildNumber = 12345
+ *      buildSuffix = FEATURE
+ *      ...
+ */
+
 def majorVersion   = "1"
 def minorVersion   = "0"
-def buildNumber
-def buildSuffix    = "Final"
+def buildNumber    = "141738651"
+def buildSuffix    = "FEATURE"
 def version        = "$majorVersion.$minorVersion"
 def runSystemTests = false
-def tasks= []
+def gradleTasks    = []
 
 if (env.BRANCH_NAME == "master") {
     buildNumber = env.BUILD_NUMBER
-    tasks = [
-        "versions:set",
-        "-DnewVersion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
+    buildSuffix = "Final"
+    gradleTasks = [
+        "clean",
+        "releaseBom",
+        "build",
+        "artifactoryPublish",
+        "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
     ]
 } else {
-    buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
-    gradleTasks = [
-            "versions:set",
-            "-DnewVersion=$buildNumber"
-
-    ]
+    if (buildSuffix == "FEATURE" && env.BRANCH_NAME.contains(buildNumber)) {
+        gradleTasks = [
+                "clean",
+                "releaseBom",
+                "build",
+                "artifactoryPublish",
+                "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
+        ]
+    } else {
+        gradleTasks = ["clean", "installBillOfMaterials", "build"]
+        buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
+    }
 }
 
 node('docker-registry') {
-    stage 'Checkout'
-    checkout scm
+
+    echo """
+Build Details
+-------------------------------------------------------
+majorVersion: $majorVersion
+minorVersion: $minorVersion
+ buildNumber: $buildNumber
+ buildSuffix: $buildSuffix
+      branch: ${env.BRANCH_NAME}
+gradle tasks: ${gradleTasks.join(" ")}
+"""
+
+    stage("Checkout") {
+        checkout scm
+    }
 
     timeout(time: 60, unit: 'MINUTES') {
-        try {
-            sh "mvn ${tasks.join(' ')} clean install deploy"
-        } catch (Exception e) {
-            error "Failed: ${e}"
-            throw (e)
-        } finally {
-            junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/build/test-results/**/*.xml'
+
+
+        stage('Gradle Tasks') {
+            sh "chmod +x gradlew"
+
+            if (env.BRANCH_NAME =~ /(?i)^pr-/) {
+                sh "./gradlew prepareForRelease"
+            }
+
+            try {
+                sh "./gradlew ${gradleTasks.join(" ")}"
+            } catch (Exception e) {
+                error "Failed: ${e}"
+                throw (e)
+            } finally {
+                junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/build/test-results/**/*.xml'
+            }
         }
     }
 }
@@ -42,3 +89,5 @@ node('docker-registry') {
 def convertBranchName(String name) {
     return name.replaceAll('/', '_')
 }
+
+
