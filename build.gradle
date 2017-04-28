@@ -8,7 +8,7 @@
 buildscript {
     apply from: 'gradle/buildscript.gradle', to: buildscript
 }
-
+apply from: "$rootDir/gradle/publishing.gradle"
 
 task prepareForRelease() {
     doLast {
