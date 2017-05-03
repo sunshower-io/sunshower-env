@@ -16,15 +16,14 @@
         <relativePath>../</relativePath>
     </parent>
     <properties>
-        <hibernate-core.version>5.0.10.Final</hibernate-core.version>
-        <infinispan-spring.version>8.0.2.Final</infinispan-spring.version>
-        <infinispan.version>8.2.4.Final</infinispan.version>
+        <h2db.version>1.4.191</h2db.version>
         <flyway.version>4.1.2</flyway.version>
         <hibernate.version>5.0.10.Final</hibernate.version>
+        <postgres-driver.version>42.0.0</postgres-driver.version>
+        <hibernate-core.version>5.0.10.Final</hibernate-core.version>
         <hibernate-search.version>5.5.4.Final</hibernate-search.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <hibernate-api.version>1.0.0.Final</hibernate-api.version>
-        <h2db.version>1.4.195</h2db.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -32,6 +31,18 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2db.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgres-driver.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.ignite</groupId>
+                <artifactId>ignite-hibernate</artifactId>
+                <version>1.2.0-incubating</version>
             </dependency>
 
 
@@ -64,26 +75,6 @@
                 <version>${hibernate-validator.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-infinispan</artifactId>
-                <version>${hibernate-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.infinispan</groupId>
-                <artifactId>infinispan-spring4</artifactId>
-                <version>${infinispan-spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.infinispan</groupId>
-                <artifactId>infinispan-cachestore-jpa</artifactId>
-                <version>${infinispan.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.infinispan</groupId>
-                <artifactId>infinispan-spring4-embedded</artifactId>
-                <version>${infinispan.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
