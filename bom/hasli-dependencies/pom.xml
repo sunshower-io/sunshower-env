@@ -18,7 +18,7 @@
     <properties>
         <hasli-arcus.version>1.0.1.Final</hasli-arcus.version>
         <hasli-maelstrom.version>1.0.2.Final</hasli-maelstrom.version>
-        <hasli-barometer.version>1.0.2.Final</hasli-barometer.version>
+        <hasli-barometer.version>1.0.3.Final</hasli-barometer.version>
     </properties>
     <dependencyManagement>
         <dependencies>
