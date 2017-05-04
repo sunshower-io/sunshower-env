@@ -17,7 +17,7 @@
         <relativePath>../</relativePath>
     </parent>
     <properties>
-	<env.version>${project.version}</env.version>
+        <env.version>${project.version}</env.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -32,6 +32,61 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jfrog.buildinfo</groupId>
+                    <artifactId>artifactory-maven-plugin</artifactId>
+                    <version>2.4.1</version>
+                    <inherited>false</inherited>
+                    <executions>
+                        <execution>
+                            <id>build-info</id>
+                            <goals>
+                                <goal>publish</goal>
+                            </goals>
+                            <configuration>
+                                <artifactory>
+                                    <includeEnvVars>true</includeEnvVars>
+                                    <timeoutSec>60</timeoutSec>
+                                    <propertiesFile>publish.properties</propertiesFile>
+                                </artifactory>
+                                <publisher>
+                                    <contextUrl>${artifactory_contextUrl}</contextUrl>
+                                    <username>${artifactory_user}</username>
+                                    <password>${artifactory_password}</password>
+                                    <excludePatterns>*-tests.jar</excludePatterns>
+                                    <repoKey>${repoKey}</repoKey>
+                                    <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
+                                </publisher>
+                                <buildInfo>
+                                    <buildName>${project.name}</buildName>
+                                    <buildNumber>1</buildNumber>
+                                </buildInfo>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jfrog.buildinfo</groupId>
+                <artifactId>artifactory-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 
     <repositories>
@@ -79,4 +134,5 @@
             <url>http://jcenter.bintray.com</url>
         </pluginRepository>
     </pluginRepositories>
+
 </project>
