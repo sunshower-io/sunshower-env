@@ -45,7 +45,7 @@
                     <groupId>org.jfrog.buildinfo</groupId>
                     <artifactId>artifactory-maven-plugin</artifactId>
                     <version>2.4.1</version>
-                    <inherited>false</inherited>
+                    <inherited>true</inherited>
                     <executions>
                         <execution>
                             <id>build-info</id>

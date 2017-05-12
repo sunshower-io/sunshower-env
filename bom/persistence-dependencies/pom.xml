@@ -16,17 +16,45 @@
         <relativePath>../</relativePath>
     </parent>
     <properties>
-        <h2db.version>1.4.191</h2db.version>
+        <h2db.version>1.4.195</h2db.version>
         <flyway.version>4.1.2</flyway.version>
-        <hibernate.version>5.0.10.Final</hibernate.version>
+        <hibernate.version>5.2.10.Final</hibernate.version>
         <postgres-driver.version>42.0.0</postgres-driver.version>
-        <hibernate-core.version>5.0.10.Final</hibernate-core.version>
-        <hibernate-search.version>5.5.4.Final</hibernate-search.version>
-        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
+        <hibernate-core.version>5.2.10.Final</hibernate-core.version>
+        <hibernate-search.version>5.7.0.Final</hibernate-search.version>
+        <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
+        <glassfish-el.version>3.0.1-b08</glassfish-el.version>
         <hibernate-api.version>1.0.0.Final</hibernate-api.version>
+        <lucene.version>5.5.3</lucene.version>
+        <lucene-backward-codecs.version>5.5.3</lucene-backward-codecs.version>
+        <lucene-codecs.version>5.3.2</lucene-codecs.version>
+
     </properties>
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-backward-codecs</artifactId>
+                <version>${lucene-backward-codecs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-codecs</artifactId>
+                <version>${lucene-codecs.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${lucene.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${glassfish-el.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>

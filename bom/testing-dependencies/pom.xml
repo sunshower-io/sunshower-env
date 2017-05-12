@@ -22,7 +22,6 @@
         <junit.jupiter.version>5.0.0-M3</junit.jupiter.version>
         <barometer.version>1.0.4.Final</barometer.version>
         <junit.vintage.version>4.12.0-M3</junit.vintage.version>
-        <infinispan.version>8.2.4.Final</infinispan.version>
         <hibernate-search.version>5.5.4.Final</hibernate-search.version>
 
         <junit-platform-launcher.version>1.0.0-M3</junit-platform-launcher.version>

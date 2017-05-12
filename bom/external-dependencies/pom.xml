@@ -18,13 +18,11 @@
     <properties>
 
 
-        <lucene-core.version>5.3.1</lucene-core.version>
         <hamcrest.version>1.3</hamcrest.version>
         <hikari-cp.version>2.5.1</hikari-cp.version>
         <jasypt.version>1.9.2</jasypt.version>
         <jclouds.version>2.0.0</jclouds.version>
         <moxy.version>2.7.0-SNAPSHOT</moxy.version>
-        <spring.version>4.3.0.BUILD-SNAPSHOT</spring.version>
         <log4j.version>2.7</log4j.version>
         <javaee-spec.version>1.0.3.Final</javaee-spec.version>
         <resteasy.version>3.0.19.Final</resteasy.version>
@@ -39,7 +37,7 @@
         <gremlin.version>3.2.3</gremlin.version>
 
 
-        <hibernate.version>5.0.10.Final</hibernate.version>
+        <hibernate.version>5.2.10.Final</hibernate.version>
 
         <jaxrs-api.version>2.0</jaxrs-api.version>
 
@@ -47,13 +45,12 @@
         <spring.version>4.3.8.RELEASE</spring.version>
         <aspectj-runtime.version>1.8.9</aspectj-runtime.version>
         <spring-security.version>4.2.2.RELEASE</spring-security.version>
-        <ignite.version>1.9.0</ignite.version>
+        <ignite.version>2.0.0</ignite.version>
 
         <jersey.version>2.25.1</jersey.version>
         <swagger.version>1.5.13</swagger.version>
         <spring-boot.version>1.5.3.RELEASE</spring-boot.version>
         <jackson.version>2.8.8</jackson.version>
-        <moxy.version>2.6.4</moxy.version>
     </properties>
 
 
@@ -171,11 +168,6 @@
             end spring dependencies
             -->
 
-            <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-core</artifactId>
-                <version>${lucene-core.version}</version>
-            </dependency>
 
 
             <dependency>
