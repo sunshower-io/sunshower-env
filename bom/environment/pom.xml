@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.hasli.env</groupId>
+    <groupId>io.sunshower.env</groupId>
     <artifactId>env</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -11,7 +11,7 @@
     <url>http://maven.apache.org</url>
 
     <parent>
-        <groupId>io.hasli.env</groupId>
+        <groupId>io.sunshower.env</groupId>
         <artifactId>aggregator</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
@@ -24,7 +24,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.hasli.env</groupId>
+                <groupId>io.sunshower.env</groupId>
                 <artifactId>external-dependencies</artifactId>
                 <version>${env.version}</version>
                 <scope>import</scope>
@@ -113,7 +113,7 @@
             </snapshots>
             <id>release</id>
             <name>libs-release</name>
-            <url>http://repo.hasli.io/artifactory/libs-release</url>
+            <url>http://repo.sunshower.io/artifactory/libs-release</url>
         </repository>
         <repository>
             <snapshots>
@@ -121,7 +121,7 @@
             </snapshots>
             <id>ext</id>
             <name>release-local</name>
-            <url>http://repo.hasli.io/artifactory/ext-release-local</url>
+            <url>http://repo.sunshower.io/artifactory/ext-release-local</url>
         </repository>
     </repositories>
     <pluginRepositories>

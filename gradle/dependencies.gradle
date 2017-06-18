@@ -21,7 +21,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom "io.hasli.test:bom-imported:${version}"
+        mavenBom "io.sunshower.test:bom-imported:${version}"
         mavenBom "org.apache.deltaspike.distribution:distributions-bom:${deltaspikeVersion}"
     }
 }

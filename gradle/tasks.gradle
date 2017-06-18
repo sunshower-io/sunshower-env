@@ -3,7 +3,7 @@ import groovy.xml.XmlUtil
 import java.util.logging.Level
 
 /**
- * -Pprojects=hasli-schemata.version:1.0.33.Final
+ * -Pprojects=sunshower-schemata.version:1.0.33.Final
  */
 
 def extractProperties = {
@@ -34,7 +34,7 @@ task listUpstream() {
 
     println("Hasli Upstream: ")
     pom.properties.childNodes().findAll { t ->
-        t.name.startsWith('hasli-')
+        t.name.startsWith('sunshower-')
     }.each { t ->
         println("\t${t.name}: ${t.text()}")
     }
@@ -61,7 +61,7 @@ task setUpstream() {
 
         println("Updating upstream version to: ${upstreamVersion}")
         pom.properties.childNodes().findAll { t ->
-            t.name.startsWith('hasli-')
+            t.name.startsWith('sunshower-')
         }.each { t ->
             t.replaceBody(upstreamVersion)
         }

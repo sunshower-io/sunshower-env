@@ -5,7 +5,7 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/target" />
-      <excludeFolder url="file://$GOPATH$/src/github.com/hasli-projects/hasli.io/hasli-env/imported/target" />
+      <excludeFolder url="file://$GOPATH$/src/github.com/sunshower-projects/sunshower.io/sunshower-env/imported/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

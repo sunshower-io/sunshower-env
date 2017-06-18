@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.hasli.env</groupId>
+    <groupId>io.sunshower.env</groupId>
     <artifactId>aggregator</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -17,22 +17,22 @@
         <module>environment</module>
         <module>external-dependencies</module>
         <module>testing-dependencies</module>
-        <module>hasli-dependencies</module>
+        <module>sunshower-dependencies</module>
         <module>persistence-dependencies</module>
     </modules>
 
 
     <repositories>
         <repository>
-            <id>hasli-repo</id>
-            <url>http://repo.hasli.io/artifactory/libs-release-local</url>
+            <id>sunshower-repo</id>
+            <url>http://repo.sunshower.io/artifactory/libs-release-local</url>
         </repository>
     </repositories>
     <pluginRepositories>
 
             <pluginRepository>
-                <id>hasli-jcenter</id>
-                <url>http://repo.hasli.io/artifactory/jcenter-cache</url>
+                <id>sunshower-jcenter</id>
+                <url>http://repo.sunshower.io/artifactory/jcenter-cache</url>
             </pluginRepository>
     </pluginRepositories>
     <build>
