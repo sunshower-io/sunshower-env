@@ -7,7 +7,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Hasli Environment Aggregator</name>
+    <name>Sunshower Environment Aggregator</name>
     <url>http://maven.apache.org</url>
 
     <properties>
