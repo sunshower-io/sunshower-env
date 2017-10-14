@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.sunshower.env</groupId>
+    <artifactId>sunshower-dependencies</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Sunshower.io Projects Dependencies</name>
+    <url>http://www.sunshower.io</url>
+
+    <parent>
+        <groupId>io.sunshower.env</groupId>
+        <artifactId>aggregator</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    <properties>
+        <sunshower-arcus.version>1.0.0-SNAPSHOT</sunshower-arcus.version>
+        <sunshower-maelstrom.version>1.0.0-SNAPSHOT</sunshower-maelstrom.version>
+        <sunshower-barometer.version>1.0.0-SNAPSHOT</sunshower-barometer.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.sunshower.arcus</groupId>
+                <artifactId>bom-exported</artifactId>
+                <version>${sunshower-arcus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.sunshower.maelstrom</groupId>
+                <artifactId>bom-exported</artifactId>
+                <version>${sunshower-maelstrom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.sunshower.barometer</groupId>
+                <artifactId>bom-exported</artifactId>
+                <version>${sunshower-barometer.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>
