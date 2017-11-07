@@ -18,6 +18,8 @@
   <properties>
 
 
+    <pf4j.version>2.1.0-SNAPSHOT</pf4j.version>
+    <pebble.version>2.4.0</pebble.version>
     <hamcrest.version>1.3</hamcrest.version>
     <hikari-cp.version>2.5.1</hikari-cp.version>
     <jasypt.version>1.9.2</jasypt.version>
@@ -54,11 +56,30 @@
     <spring-boot.version>2.0.0.M5</spring-boot.version>
     <jackson.version>2.9.2</jackson.version>
     <javax-inject.version>1</javax-inject.version>
+    <projectreactor.version>3.1.1.RELEASE</projectreactor.version>
   </properties>
 
 
   <dependencyManagement>
     <dependencies>
+
+
+      <dependency>
+        <groupId>org.pf4j</groupId>
+        <artifactId>pf4j</artifactId>
+        <version>${pf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-core</artifactId>
+        <version>${projectreactor.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mitchellbosecke</groupId>
+        <artifactId>pebble</artifactId>
+        <version>${pebble.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>org.eclipse.persistence</groupId>

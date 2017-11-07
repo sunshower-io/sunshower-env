@@ -1,68 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.sunshower.env</groupId>
+  <artifactId>testing-dependencies</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Sunshower.io Testing Dependencies</name>
+  <url>http://www.sunshower.io</url>
+
+  <parent>
     <groupId>io.sunshower.env</groupId>
-    <artifactId>testing-dependencies</artifactId>
+    <artifactId>aggregator</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>Sunshower.io Testing Dependencies</name>
-    <url>http://www.sunshower.io</url>
+    <relativePath>../</relativePath>
+  </parent>
+  <properties>
+    <hamcrest.version>1.3</hamcrest.version>
+    <mockito.version>2.9.0</mockito.version>
 
-    <parent>
-        <groupId>io.sunshower.env</groupId>
-        <artifactId>aggregator</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
-    </parent>
-    <properties>
-        <hamcrest.version>1.3</hamcrest.version>
-        <mockito.version>2.9.0</mockito.version>
+    <junit.jupiter.version>5.0.1</junit.jupiter.version>
+    <barometer.version>1.0.0-SNAPSHOT</barometer.version>
+    <junit.vintage.version>4.12.1</junit.vintage.version>
+    <hibernate-search.version>5.5.4.Final</hibernate-search.version>
 
-        <junit.jupiter.version>5.0.1</junit.jupiter.version>
-        <barometer.version>1.0.0-SNAPSHOT</barometer.version>
-        <junit.vintage.version>4.12.1</junit.vintage.version>
-        <hibernate-search.version>5.5.4.Final</hibernate-search.version>
+    <junit-platform-launcher.version>1.0.1</junit-platform-launcher.version>
+    <jaxrs-api.version>2.1</jaxrs-api.version>
+    <hibernate-api.version>1.0.0.Final</hibernate-api.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
 
-        <junit-platform-launcher.version>1.0.1</junit-platform-launcher.version>
-        <jaxrs-api.version>2.1</jaxrs-api.version>
-        <hibernate-api.version>1.0.0.Final</hibernate-api.version>
-    </properties>
-    <dependencyManagement>
-        <dependencies>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-runner</artifactId>
+        <version>${junit-platform-launcher.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>${hamcrest.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>${junit.vintage.version}</version>
+        <scope>test</scope>
+      </dependency>
 
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-core</artifactId>
-                <version>${hamcrest.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-                <version>${junit.vintage.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>junit-platform-launcher</artifactId>
-                <version>${junit-platform-launcher.version}</version>
-            </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>${junit-platform-launcher.version}</version>
+      </dependency>
 
 
-
-        </dependencies>
-    </dependencyManagement>
+    </dependencies>
+  </dependencyManagement>
 </project>
