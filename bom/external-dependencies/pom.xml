@@ -71,6 +71,13 @@
       </dependency>
 
       <dependency>
+        <groupId>org.glassfish.jersey.media</groupId>
+        <artifactId>jersey-media-sse</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+
+
+      <dependency>
         <groupId>io.projectreactor</groupId>
         <artifactId>reactor-core</artifactId>
         <version>${projectreactor.version}</version>
@@ -107,14 +114,6 @@
         <scope>import</scope>
       </dependency>
 
-
-      <dependency>
-        <groupId>io.sunshower.env</groupId>
-        <artifactId>sunshower-dependencies</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
 
 
       <!--

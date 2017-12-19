@@ -17,7 +17,6 @@
         <module>environment</module>
         <module>external-dependencies</module>
         <module>testing-dependencies</module>
-        <module>sunshower-dependencies</module>
         <module>persistence-dependencies</module>
     </modules>
 

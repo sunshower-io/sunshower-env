@@ -20,7 +20,6 @@
     <mockito.version>2.9.0</mockito.version>
 
     <junit.jupiter.version>5.0.1</junit.jupiter.version>
-    <barometer.version>1.0.0-SNAPSHOT</barometer.version>
     <junit.vintage.version>4.12.1</junit.vintage.version>
     <hibernate-search.version>5.5.4.Final</hibernate-search.version>
 
