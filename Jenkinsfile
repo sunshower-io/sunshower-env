@@ -32,7 +32,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
             }
 
         }
@@ -41,7 +41,6 @@ pipeline {
 
             steps {
                 container('maven') {
-                    sh "env"
                     sh """
                         mvn clean install deploy \
                         -s settings/settings.xml
@@ -68,7 +67,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
 
 
                 container('maven') {
@@ -130,10 +129,9 @@ pipeline {
             }
 
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
 
                 container('maven') {
-
                     script {
                         /**
                          * strip the leading "release/" prefix
