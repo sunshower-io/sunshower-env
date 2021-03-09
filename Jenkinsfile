@@ -192,10 +192,10 @@ pipeline {
                     sh """
                         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
                     """
-
-                    sh """
-                        git remote set-url --push origin https://${GITHUB_PSW}@github.com/sunshower-io/sunshower-env
-                    """
+//
+//                    sh """
+//                        git remote set-url --push origin https://${GITHUB_PSW}@github.com/sunshower-io/sunshower-env
+//                    """
 
                     sh """
                         mvn versions:set \
