@@ -47,13 +47,6 @@ pipeline {
                         -s settings/settings.xml
                     """
 
-
-                    sh """
-                        mvn clean install deploy \
-                        -P sunshower \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml
-                    """
                 }
             }
         }
@@ -90,8 +83,7 @@ pipeline {
                      * increment sunshower-env version
                      */
                     sh """
-                        mvn -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml \
+                        mvn -s settings/settings.xml \
                         versions:set -DnewVersion="${env.NEXT_VERSION}"
                     """
 
@@ -101,51 +93,28 @@ pipeline {
 
                     sh """
                         mvn versions:set-property \
-                        -Dproperty=env.version \
+                        -Dproperty=environment.version \
                         -DnewVersion=${env.NEXT_VERSION} \
-                        -s sunshower-env/settings/settings.xml \
-                        -f sunshower-env
+                        -s settings/settings.xml
                     """
 
 
-                    /**
-                     * increment parent version
-                     */
-
-                    sh """
-                        mvn -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml \
-                        versions:set -DnewVersion="${env.NEXT_VERSION}"
-                    """
 
                     sh """
                         mvn versions:set-property \
-                        -Dproperty=env.version \
+                        -Dproperty=environment.version \
                         -DnewVersion=${env.NEXT_VERSION} \
-                        -s sunshower-env/settings/settings.xml \
-                        -f sunshower-env/parent
+                        -s settings/settings.xml
                     """
-
 
 
                     /**
-                     * deploy sunshower-env version
+                     * deploy sunshower-environment version
                      */
                     sh """
                         mvn clean install deploy \
-                        -f sunshower-env \
                         -s sunshower-env/settings/settings.xml
                     """
-                    /**
-                     * deploy parent version
-                     */
-                    sh """
-                        mvn clean install deploy \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml
-                    """
-
-
 
 
                 }
@@ -230,51 +199,25 @@ pipeline {
 
                     sh """
                         mvn versions:set \
-                        -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml \
-                        -DnewVersion="${env.RELEASED_VERSION}"
-                    """
-
-
-                    sh """
-                        mvn versions:set \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml \
+                        -s settings/settings.xml \
                         -DnewVersion="${env.RELEASED_VERSION}"
                     """
 
 
                     sh """
                         mvn versions:set-property \
-                        -Dproperty=env.version \
+                        -Dproperty=environment.version \
                         -DnewVersion=${env.RELEASED_VERSION} \
-                        -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml
-                    """
-
-                    sh """
-                        mvn versions:set-property \
-                        -Dproperty=env.version \
-                        -DnewVersion=${env.RELEASED_VERSION} \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml
-                    """
-
-
-
-
-                    sh """
-                        mvn clean install deploy \
-                        -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml
+                        -s settings/settings.xml
                     """
 
 
                     sh """
                         mvn clean install deploy \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml
+                        -s settings/settings.xml
                     """
+
+
 
                     sh """
                         git tag "v${env.RELEASED_VERSION}" \
@@ -287,47 +230,24 @@ pipeline {
 
                     sh """
                         mvn versions:set \
-                        -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml \
-                        -DnewVersion="${env.NEXT_VERSION}"
-                    """
-
-                    sh """
-                        mvn versions:set \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml \
+                        -s settings/settings.xml \
                         -DnewVersion="${env.NEXT_VERSION}"
                     """
 
                     sh """
                         mvn versions:set-property \
-                        -Dproperty=env.version \
+                        -Dproperty=environment.version \
                         -DnewVersion=${env.NEXT_VERSION} \
-                        -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml
+                        -s settings/settings.xml
                     """
 
-
-                    sh """
-                        mvn versions:set-property \
-                        -Dproperty=env.version \
-                        -DnewVersion=${env.NEXT_VERSION} \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml
-                    """
 
 
                     sh """
                         mvn clean install deploy \
-                        -f sunshower-env \
-                        -s sunshower-env/settings/settings.xml
+                        -s settings/settings.xml
                     """
 
-                    sh """
-                        mvn clean install deploy \
-                        -f sunshower-env/parent \
-                        -s sunshower-env/settings/settings.xml
-                    """
 
                     sh """
                         git commit -am "[released] ${env.TAG_NAME} -> ${env.RELEASED_VERSION}"
