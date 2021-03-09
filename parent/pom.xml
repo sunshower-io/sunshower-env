@@ -13,7 +13,7 @@
     </scm>
 
     <properties>
-        <environment.version>1.0.0</environment.version>
+        <environment.version>1.0.0-SNAPSHOT</environment.version>
         <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
     </properties>
 
