@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            yamlFile 'deployments/agent/template.yaml'
+            yamlFile 'https://raw.githubusercontent.com/sunshower-io/sunshower-devops/v1.0.3.Final/deployments/agent/template.yaml'
         }
     }
     environment {
