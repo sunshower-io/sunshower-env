@@ -1,93 +1,351 @@
-#!/usr/bin/env groovy
-
-/**
- * Process for publishing FEATURE builds to artifactory
- *
- * 1. feature branch must contain an identifier that matches the buildNumber
- * 2. buildSuffix must be set to FEATURE
- * 3. builds will only publish FEATURE builds from feature branches, master must contain buildSuffix set to 'Final'
- *
- * ex.) Branch Name = feature-12345/some-branch
- *      ...
- *      buildNumber = 12345
- *      buildSuffix = FEATURE
- *      ...
- */
-
-def majorVersion   = "1"
-def minorVersion   = "0"
-def buildNumber    = "141738651"
-def buildSuffix    = "FEATURE"
-def version        = "$majorVersion.$minorVersion"
-def runSystemTests = false
-def gradleTasks    = []
-
-if (env.BRANCH_NAME == "master") {
-    buildNumber = env.BUILD_NUMBER
-    buildSuffix = "Final"
-    gradleTasks = [
-        "clean",
-        "releaseBom",
-        "build",
-        "artifactoryPublish",
-        "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
-    ]
-} else {
-    if (buildSuffix == "FEATURE" && env.BRANCH_NAME.contains(buildNumber)) {
-        gradleTasks = [
-                "clean",
-                "releaseBom",
-                "build",
-                "artifactoryPublish",
-                "-Pversion=$majorVersion.$minorVersion.$buildNumber.$buildSuffix"
-        ]
-    } else {
-        gradleTasks = ["clean", "installBillOfMaterials", "build"]
-        buildNumber = "${env.BUILD_NUMBER}.${convertBranchName(env.BRANCH_NAME)}"
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile 'deployments/agent/template.yaml'
+        }
     }
-}
+    environment {
 
-node('docker-registry') {
+        /**
+         * credentials for Artifactory
+         */
+        MVN_REPO = credentials('artifacts-credentials')
 
-    echo """
-Build Details
--------------------------------------------------------
-majorVersion: $majorVersion
-minorVersion: $minorVersion
- buildNumber: $buildNumber
- buildSuffix: $buildSuffix
-      branch: ${env.BRANCH_NAME}
-gradle tasks: ${gradleTasks.join(" ")}
-"""
 
-    stage("Checkout") {
-        checkout scm
+        /**
+         * github credentials
+         */
+        GITHUB = credentials('github-build-credentials')
+
+        /**
+         * this just contains the build email address and name
+         */
+        GITHUB_USER = credentials("github-build-userinfo")
+
+        /**
+         * current version
+         */
+        CURRENT_VERSION = readMavenPom(file: 'sunshower-env/pom.xml').getVersion()
     }
 
-    timeout(time: 60, unit: 'MINUTES') {
+    stages {
 
-
-        stage('Gradle Tasks') {
-            sh "chmod +x gradlew"
-
-            if (env.BRANCH_NAME =~ /(?i)^pr-/) {
-                sh "./gradlew prepareForRelease"
+        stage('Checkout') {
+            steps {
+                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
             }
 
-            try {
-                sh "./gradlew ${gradleTasks.join(" ")}"
-            } catch (Exception e) {
-                error "Failed: ${e}"
-                throw (e)
-            } finally {
-                junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/build/test-results/**/*.xml'
+        }
+
+        stage('build env poms') {
+
+            steps {
+                container('maven') {
+                    sh "env"
+                    sh """
+                        mvn clean install deploy \
+                        -s settings/settings.xml
+                    """
+
+
+                    sh """
+                        mvn clean install deploy \
+                        -P sunshower \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml
+                    """
+                }
+            }
+        }
+
+        /**
+         * we could probably eventually handle this via plugin, but the process is
+         *
+         * Upon merge to master:
+         *
+         * 1. Increment the version number
+         * 2. Update the version-number in the POM files
+         * 3. Rebuild the Maven/Gradle projects
+         * 4. Upon success, increment to next snapshot
+         * 5. Upon failure, fail
+         * 6. Push next snapshot to master
+         */
+        stage('deploy master snapshot') {
+            when {
+                branch 'master'
+            }
+            steps {
+                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+
+
+                container('maven') {
+                    script {
+                        segs = (env.CURRENT_VERSION - '-SNAPSHOT').split('\\.')
+                        env.NEXT_VERSION = "${segs.join('.')}-${env.BUILD_NUMBER}-SNAPSHOT"
+                    }
+
+
+
+                    /**
+                     * increment sunshower-env version
+                     */
+                    sh """
+                        mvn -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml \
+                        versions:set -DnewVersion="${env.NEXT_VERSION}"
+                    """
+
+                    /**
+                     * increment env.version in sunshower-env
+                     */
+
+                    sh """
+                        mvn versions:set-property \
+                        -Dproperty=env.version \
+                        -DnewVersion=${env.NEXT_VERSION} \
+                        -s sunshower-env/settings/settings.xml \
+                        -f sunshower-env
+                    """
+
+
+                    /**
+                     * increment parent version
+                     */
+
+                    sh """
+                        mvn -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml \
+                        versions:set -DnewVersion="${env.NEXT_VERSION}"
+                    """
+
+                    sh """
+                        mvn versions:set-property \
+                        -Dproperty=env.version \
+                        -DnewVersion=${env.NEXT_VERSION} \
+                        -s sunshower-env/settings/settings.xml \
+                        -f sunshower-env/parent
+                    """
+
+
+
+                    /**
+                     * deploy sunshower-env version
+                     */
+                    sh """
+                        mvn clean install deploy \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml
+                    """
+                    /**
+                     * deploy parent version
+                     */
+                    sh """
+                        mvn clean install deploy \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+
+
+
+                }
+            }
+        }
+
+
+        stage("release component") {
+            when {
+                expression {
+                    env.GIT_BRANCH == "release/${env.CURRENT_VERSION}"
+                }
+            }
+
+            steps {
+                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+
+                container('maven') {
+
+                    script {
+                        /**
+                         * strip the leading "release/" prefix
+                         */
+                        env.TAG_NAME = env.GIT_BRANCH - "release/"
+
+                        /**
+                         * compute the next versions:
+                         *
+                         * RELEASED_VERSION is the version that we're
+                         * 1. building
+                         * 2. deploying
+                         * 3. tagging
+                         *
+                         * NEXT_VERSION is the version that main will be incremented to
+                         *
+                         * So, if CURRENT_VERSION = 1.0.0-SNAPSHOT,
+                         * then RELEASED_VERSION = 1.0.0.Final
+                         * and NEXT_VERSION = 1.0.1-SNAPSHOT
+                         */
+                        version = env.CURRENT_VERSION
+
+
+                        segs = (version - '-SNAPSHOT')
+                                .split('\\.')
+                                .collect { i ->
+                                    i as int
+                                }
+
+                        releasedVersion = (segs[0..-2] << ++segs[-1]).join('.')
+                        nextVersion = releasedVersion + "-SNAPSHOT"
+
+                        env.NEXT_VERSION = nextVersion
+                        env.RELEASED_VERSION = "${releasedVersion}.Final"
+                    }
+
+
+                    /**
+                     * configure github email address
+                     */
+                    sh """
+                        git config --global user.email "${GITHUB_USER_USR}"
+                    """
+
+                    /**
+                     * configure
+                     */
+                    sh """
+                        git config --global user.name "${GITHUB_USER_PSW}"
+                    """
+
+                    sh """
+                        mkdir -p ~/.ssh
+                    """
+
+                    sh """
+                        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+                    """
+
+                    sh """
+                        git remote set-url --push origin https://${GITHUB_PSW}@github.com/sunshower-io/sunshower-devops
+                    """
+
+                    sh """
+                        mvn versions:set \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml \
+                        -DnewVersion="${env.RELEASED_VERSION}"
+                    """
+
+
+                    sh """
+                        mvn versions:set \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml \
+                        -DnewVersion="${env.RELEASED_VERSION}"
+                    """
+
+
+                    sh """
+                        mvn versions:set-property \
+                        -Dproperty=env.version \
+                        -DnewVersion=${env.RELEASED_VERSION} \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+                    sh """
+                        mvn versions:set-property \
+                        -Dproperty=env.version \
+                        -DnewVersion=${env.RELEASED_VERSION} \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+
+
+
+                    sh """
+                        mvn clean install deploy \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+
+                    sh """
+                        mvn clean install deploy \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+                    sh """
+                        git tag "v${env.RELEASED_VERSION}" \
+                        -m "[released] Tagging: ${env.RELEASED_VERSION} (from ${env.TAG_NAME})"
+                    """
+
+                    sh """
+                        git push origin "v${env.RELEASED_VERSION}"
+                    """
+
+                    sh """
+                        mvn versions:set \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml \
+                        -DnewVersion="${env.NEXT_VERSION}"
+                    """
+
+                    sh """
+                        mvn versions:set \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml \
+                        -DnewVersion="${env.NEXT_VERSION}"
+                    """
+
+                    sh """
+                        mvn versions:set-property \
+                        -Dproperty=env.version \
+                        -DnewVersion=${env.NEXT_VERSION} \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+
+                    sh """
+                        mvn versions:set-property \
+                        -Dproperty=env.version \
+                        -DnewVersion=${env.NEXT_VERSION} \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+
+                    sh """
+                        mvn clean install deploy \
+                        -f sunshower-env \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+                    sh """
+                        mvn clean install deploy \
+                        -f sunshower-env/parent \
+                        -s sunshower-env/settings/settings.xml
+                    """
+
+                    sh """
+                        git commit -am "[released] ${env.TAG_NAME} -> ${env.RELEASED_VERSION}"
+                    """
+
+                    sh """
+                        git checkout -b master
+                    """
+
+                    sh """
+                        git pull --rebase origin master
+                    """
+
+                    sh """
+                        git push -u origin master
+                    """
+                }
             }
         }
     }
 }
-
-def convertBranchName(String name) {
-    return name.replaceAll('/', '_')
-}
-
-

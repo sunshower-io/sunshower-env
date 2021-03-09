@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.sunshower.environment</groupId>
+    <artifactId>env-aggregator</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Sunshower Environment Aggregator</name>
+
+    <properties>
+        <project.scm.id>github.com</project.scm.id>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>sunshower-releases</id>
+            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>sunshower-snapshots</id>
+            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+
+    <scm>
+        <tag>HEAD</tag>
+        <url>https://github.com/sunshower-io/${project.scm.tag}</url>
+        <connection>scm:git:https://${env.GITHUB_PSW}@github.com/sunshower-io/sunshower-env</connection>
+        <developerConnection>scm:git:https://${env.GITHUB_PSW}@github.com/sunshower-io/sunshower-env</developerConnection>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>sunshower-snapshots</id>
+            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots/</url>
+        </repository>
+        <repository>
+            <id>sunshower-releases</id>
+            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
+        </repository>
+    </repositories>
+
+
+    <modules>
+        <module>parent</module>
+    </modules>
+
+
+</project>
