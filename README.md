@@ -28,3 +28,4 @@ of the version (it should always be a SNAPSHOT locally).  From there:
 If everything goes well, you should get a new tag at github.com/sunshower-io/sunshower-env/releases.  
 
 If your release fails, you will have to delete the release at Github before trying again.  
+
