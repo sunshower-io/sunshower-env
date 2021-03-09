@@ -25,7 +25,7 @@ pipeline {
         /**
          * current version
          */
-        CURRENT_VERSION = readMavenPom(file: 'sunshower-env/pom.xml').getVersion()
+        CURRENT_VERSION = readMavenPom(file: 'pom.xml').getVersion()
     }
 
     stages {
@@ -80,7 +80,7 @@ pipeline {
 
 
                     /**
-                     * increment sunshower-env version
+                     * increment environment version
                      */
                     sh """
                         mvn -s settings/settings.xml \
@@ -88,7 +88,7 @@ pipeline {
                     """
 
                     /**
-                     * increment env.version in sunshower-env
+                     * increment environment.version in sunshower-environment
                      */
 
                     sh """
@@ -113,7 +113,7 @@ pipeline {
                      */
                     sh """
                         mvn clean install deploy \
-                        -s sunshower-env/settings/settings.xml
+                        -s settings/settings.xml
                     """
 
 
@@ -194,7 +194,7 @@ pipeline {
                     """
 
                     sh """
-                        git remote set-url --push origin https://${GITHUB_PSW}@github.com/sunshower-io/sunshower-devops
+                        git remote set-url --push origin https://${GITHUB_PSW}@github.com/sunshower-io/sunshower-env
                     """
 
                     sh """
