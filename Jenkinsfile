@@ -32,7 +32,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[preleased\\].*')
             }
 
         }
@@ -67,7 +67,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[preleased\\].*')
 
 
                 container('maven') {
@@ -129,10 +129,9 @@ pipeline {
             }
 
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[preleased\\].*')
 
                 container('maven') {
-
                     script {
                         /**
                          * strip the leading "release/" prefix
