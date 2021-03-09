@@ -41,7 +41,6 @@ pipeline {
 
             steps {
                 container('maven') {
-                    sh "env"
                     sh """
                         mvn clean install deploy \
                         -s settings/settings.xml
