@@ -30,13 +30,6 @@ pipeline {
 
     stages {
 
-//        stage('Checkout') {
-//            steps {
-//                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
-//            }
-//
-//        }
-
         stage('build env poms') {
 
             steps {
@@ -67,8 +60,6 @@ pipeline {
                 branch 'master'
             }
             steps {
-//                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
-
 
                 container('maven') {
                     script {
@@ -129,7 +120,6 @@ pipeline {
             }
 
             steps {
-//                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
 
                 container('maven') {
                     script {
@@ -201,6 +191,13 @@ pipeline {
                         -DnewVersion="${env.RELEASED_VERSION}"
                     """
 
+                    sh """
+                        mvn versions:set \
+                        -f parent/pom.xml \
+                        -s settings/settings.xml \
+                        -DnewVersion="${env.RELEASED_VERSION}"
+                    """
+
 
                     sh """
                         mvn versions:set-property \
@@ -209,12 +206,24 @@ pipeline {
                         -s settings/settings.xml
                     """
 
+                    sh """
+                        mvn versions:set-property \
+                        -f parent/pom.xml \
+                        -Dproperty=environment.version \
+                        -DnewVersion=${env.RELEASED_VERSION} \
+                        -s settings/settings.xml
+                    """
 
                     sh """
                         mvn clean install deploy \
                         -s settings/settings.xml
                     """
 
+                    sh """
+                        mvn clean install deploy \
+                        -f parent/pom.xml
+                        -s settings/settings.xml
+                    """
 
 
                     sh """
@@ -232,6 +241,15 @@ pipeline {
                         -DnewVersion="${env.NEXT_VERSION}"
                     """
 
+
+
+                    sh """
+                        mvn versions:set \
+                        -f parent/pom.xml \
+                        -s settings/settings.xml \
+                        -DnewVersion="${env.NEXT_VERSION}"
+                    """
+
                     sh """
                         mvn versions:set-property \
                         -Dproperty=environment.version \
@@ -239,6 +257,13 @@ pipeline {
                         -s settings/settings.xml
                     """
 
+                    sh """
+                        mvn versions:set-property \
+                        -f parent/pom.xml \
+                        -Dproperty=environment.version \
+                        -DnewVersion=${env.NEXT_VERSION} \
+                        -s settings/settings.xml
+                    """
 
 
                     sh """
@@ -246,6 +271,11 @@ pipeline {
                         -s settings/settings.xml
                     """
 
+                    sh """
+                        mvn clean install deploy \
+                        -f parent/pom.xml \
+                        -s settings/settings.xml
+                    """
 
                     sh """
                         git commit -am "[released] ${env.TAG_NAME} -> ${env.RELEASED_VERSION}"
