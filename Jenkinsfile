@@ -32,7 +32,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
             }
 
         }
@@ -67,7 +67,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
 
 
                 container('maven') {
@@ -129,7 +129,7 @@ pipeline {
             }
 
             steps {
-                scmSkip(deleteBuild: true, skipPattern: '\\[released\\].*')
+                scmSkip(deleteBuild: true, skipPattern: '^\\[released\\].*')
 
                 container('maven') {
 
