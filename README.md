@@ -25,4 +25,6 @@ of the version (it should always be a SNAPSHOT locally).  From there:
 1. Merge master via `git pull && git merge master`
 1. Push to your branch--it will be built and released automatically
 
-If everything goes well, 
+If everything goes well, you should get a new tag at github.com/sunshower-io/sunshower-env/releases.  
+
+If your release fails, you will have to delete the release at Github before trying again.  
