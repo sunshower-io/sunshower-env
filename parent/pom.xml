@@ -17,6 +17,18 @@
         <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
     </properties>
 
+
+    <repositories>
+        <repository>
+            <id>sunshower-snapshots</id>
+            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots/</url>
+        </repository>
+        <repository>
+            <id>sunshower-releases</id>
+            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
+        </repository>
+    </repositories>
+
     <distributionManagement>
         <repository>
             <id>sunshower-releases</id>
