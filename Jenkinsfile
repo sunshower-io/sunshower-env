@@ -39,6 +39,11 @@ pipeline {
                         -s settings/settings.xml
                     """
 
+                    sh """
+                        mvn clean install deploy \
+                        -f parent/pom.xml \
+                        -s settings/settings.xml
+                    """
                 }
             }
         }
@@ -77,6 +82,13 @@ pipeline {
                         versions:set -DnewVersion="${env.NEXT_VERSION}"
                     """
 
+
+                    sh """
+                        mvn -s settings/settings.xml \
+                        -f parent/pom.xml \
+                        versions:set -DnewVersion="${env.NEXT_VERSION}"
+                    """
+
                     /**
                      * increment environment.version in sunshower-environment
                      */
@@ -89,9 +101,9 @@ pipeline {
                     """
 
 
-
                     sh """
                         mvn versions:set-property \
+                        -f parent/pom.xml \
                         -Dproperty=environment.version \
                         -DnewVersion=${env.NEXT_VERSION} \
                         -s settings/settings.xml
@@ -106,6 +118,11 @@ pipeline {
                         -s settings/settings.xml
                     """
 
+                    sh """
+                        mvn clean install deploy \
+                        -f parent/pom.xml \
+                        -s settings/settings.xml
+                    """
 
                 }
             }
@@ -221,7 +238,7 @@ pipeline {
 
                     sh """
                         mvn clean install deploy \
-                        -f parent/pom.xml
+                        -f parent/pom.xml \
                         -s settings/settings.xml
                     """
 
