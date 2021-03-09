@@ -194,7 +194,7 @@ pipeline {
                     """
 //
                     sh """
-                        git remote set-url --push origin https://${GITHUB_PSW}:x-oauth-basic@github.com/sunshower-io/sunshower-env
+                        git remote set-url --push origin https://${GITHUB}@github.com/sunshower-io/sunshower-env
                     """
 
                     sh """
