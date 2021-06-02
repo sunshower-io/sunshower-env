@@ -69,16 +69,16 @@ jobs:
 
 
 
-      - name: Increment Bills-of-Materials
+      - name: Increment Parent
         run: >-
-          mvn versions:set -f bom
+          mvn versions:set -f parent/pom.xml
           -DnewVersion=${{ steps.finalVersion.outputs.result }} &&
           mvn versions:set-property -f bom
           -Dproperty=environment.version -DnewVersion=${{ steps.finalVersion.outputs.result }} &&
           mvn clean install -f bom
 
 
-      - name: Deploy Bills-Of-Materials
+      - name: Deploy Parent
         run: >-
           mvn clean install deploy -f parent/pom.xml
           --settings bom/settings/settings.xml -e
