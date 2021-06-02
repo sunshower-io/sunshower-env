@@ -172,7 +172,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete release tag
-        run: |
-          git push --delete origin ${GITHUB_REF##*/}
-
+#      - name: Delete release tag
+#        run: |
+#          git push --delete origin ${GITHUB_REF##*/}
+#
