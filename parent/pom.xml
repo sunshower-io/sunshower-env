@@ -27,6 +27,10 @@
             <id>sunshower-releases</id>
             <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
         </repository>
+        <repository>
+            <id>sunshower-github</id>
+            <url>https://maven.pkg.github.com/sunshower-io/*</url>
+        </repository>
     </repositories>
 
     <distributionManagement>

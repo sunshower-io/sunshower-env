@@ -14,14 +14,19 @@
     </properties>
 
     <distributionManagement>
+<!--        <repository>-->
+<!--            <id>sunshower-releases</id>-->
+<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>sunshower-snapshots</id>-->
+<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots</url>-->
+<!--        </snapshotRepository>-->
         <repository>
-            <id>sunshower-releases</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
+            <id>sunshower-github</id>
+            <name>Sunshower-env Github</name>
+            <url>https://maven.pkg.github.com/sunshower-io/sunshower-env</url>
         </repository>
-        <snapshotRepository>
-            <id>sunshower-snapshots</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots</url>
-        </snapshotRepository>
     </distributionManagement>
 
 
@@ -33,16 +38,16 @@
         <developerConnection>scm:git:https://${env.GITHUB_PSW}@github.com/sunshower-io/sunshower-env</developerConnection>
     </scm>
 
-    <repositories>
-        <repository>
-            <id>sunshower-snapshots</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots/</url>
-        </repository>
-        <repository>
-            <id>sunshower-releases</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>sunshower-snapshots</id>-->
+<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots/</url>-->
+<!--        </repository>-->
+<!--        <repository>-->
+<!--            <id>sunshower-releases</id>-->
+<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
 
     <modules>
