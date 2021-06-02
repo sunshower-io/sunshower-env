@@ -73,15 +73,15 @@ jobs:
         run: >-
           mvn versions:set -f parent/pom.xml
           -DnewVersion=${{ steps.finalVersion.outputs.result }} &&
-          mvn versions:set-property -f bom
+          mvn versions:set-property -f parent/pom.xml
           -Dproperty=environment.version -DnewVersion=${{ steps.finalVersion.outputs.result }} &&
-          mvn clean install -f bom
+          mvn clean install -f parent/pom.xml
 
 
       - name: Deploy Parent
         run: >-
           mvn clean install deploy -f parent/pom.xml
-          --settings bom/settings/settings.xml -e
+          --settings settings/settings.xml -e
           -Dmaven-repo.github.username=${{secrets.MAVEN_REPOSITORY_USERNAME}}
           -Dmaven-repo.github.password=${{secrets.MAVEN_REPOSITORY_PASSWORD}}
 
@@ -143,17 +143,17 @@ jobs:
 
       - name: Increment Bills-of-Materials to Snapshots
         run: >-
-          mvn versions:set -f bom
+          mvn versions:set -f parent/pom.xml
           -DnewVersion=${{ steps.snapshotVersion.outputs.result }} &&
-          mvn versions:set-property -f bom
+          mvn versions:set-property -f parent/pom.xml
           -Dproperty=environment.version -DnewVersion=${{ steps.snapshotVersion.outputs.result }} &&
-          mvn clean install -f bom
+          mvn clean install -f parent/pom.xml
 
 
 
       - name: Deploy Bills-Of-Materials
         run: >-
-          mvn install deploy -f bom
+          mvn install deploy -f parent/pom.xml
           --settings settings/settings.xml -e
           -Dmaven-repo.github.username=${{secrets.MAVEN_REPOSITORY_USERNAME}}
           -Dmaven-repo.github.password=${{secrets.MAVEN_REPOSITORY_PASSWORD}}
