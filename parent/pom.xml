@@ -9,7 +9,7 @@
     <name>Sunshower Parent Pom</name>
 
     <scm>
-        <url>https://github.com/sunshower-io/sunshower.io</url>
+        <url>https://github.com/sunshower-io/sunshower-env</url>
     </scm>
 
     <properties>
@@ -17,31 +17,20 @@
         <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>sunshower-github</id>
+            <name>Sunshower-env Github</name>
+            <url>https://maven.pkg.github.com/sunshower-io/sunshower-env</url>
+        </repository>
+    </distributionManagement>
 
     <repositories>
-        <repository>
-            <id>sunshower-snapshots</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots/</url>
-        </repository>
-        <repository>
-            <id>sunshower-releases</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
-        </repository>
         <repository>
             <id>sunshower-github</id>
             <url>https://maven.pkg.github.com/sunshower-io/*</url>
         </repository>
     </repositories>
 
-    <distributionManagement>
-        <repository>
-            <id>sunshower-releases</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>sunshower-snapshots</id>
-            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

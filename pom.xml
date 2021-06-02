@@ -14,14 +14,6 @@
     </properties>
 
     <distributionManagement>
-<!--        <repository>-->
-<!--            <id>sunshower-releases</id>-->
-<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>sunshower-snapshots</id>-->
-<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots</url>-->
-<!--        </snapshotRepository>-->
         <repository>
             <id>sunshower-github</id>
             <name>Sunshower-env Github</name>
@@ -38,16 +30,6 @@
         <developerConnection>scm:git:https://${env.GITHUB_PSW}@github.com/sunshower-io/sunshower-env</developerConnection>
     </scm>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>sunshower-snapshots</id>-->
-<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-snapshots/</url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>sunshower-releases</id>-->
-<!--            <url>http://artifacts.sunshower.cloud/repository/sunshower-releases/</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
 
 
     <modules>

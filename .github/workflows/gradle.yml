@@ -20,7 +20,7 @@ jobs:
         java-version: 15
     - name: Install Maven Dependencies
       run: >-
-        mvn install deploy -f bom
+        mvn install deploy -f parent/pom.xml
         --settings settings/settings.xml
         -Dmaven-repo.github.username=${{secrets.MAVEN_REPOSITORY_USERNAME}}
         -Dmaven-repo.github.password=${{secrets.MAVEN_REPOSITORY_PASSWORD}}
