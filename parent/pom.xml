@@ -18,6 +18,14 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
     </properties>
 
+    <url>https://www.sunshower.io</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
     <developers>
         <developer>
             <email>josiah@sunshower.io</email>
