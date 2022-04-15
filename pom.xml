@@ -4,7 +4,7 @@
 
     <groupId>io.sunshower.environment</groupId>
     <artifactId>env-aggregator</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.5.Final</version>
     <packaging>pom</packaging>
 
     <name>Sunshower Environment Aggregator</name>
@@ -37,13 +37,6 @@
             </roles>
         </developer>
     </developers>
-    <distributionManagement>
-        <repository>
-            <id>sunshower-github</id>
-            <name>Sunshower-env Github</name>
-            <url>https://maven.pkg.github.com/sunshower-io/sunshower-env</url>
-        </repository>
-    </distributionManagement>
 
 
 
@@ -60,6 +53,22 @@
     </modules>
 
     <profiles>
+        <profile>
+            <id>github</id>
+            <activation>
+                <property>
+                    <name>deployToGitHub</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>sunshower-github</id>
+                    <name>Sunshower-env Github</name>
+                    <url>https://maven.pkg.github.com/sunshower-io/sunshower-env</url>
+                </repository>
+            </distributionManagement>
+        </profile>
         <profile>
             <id>maven-central</id>
             <distributionManagement>
