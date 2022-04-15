@@ -3,13 +3,13 @@
 
     <groupId>io.sunshower.environment</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.16-SNAPSHOT</version>
+    <version>1.0.18-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sunshower Parent Pom</name>
 
     <properties>
-        <environment.version>1.0.16-SNAPSHOT</environment.version>
+        <environment.version>1.0.18-SNAPSHOT</environment.version>
         <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
         <project.scm.id>github.com</project.scm.id>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
