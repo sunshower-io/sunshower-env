@@ -3,7 +3,7 @@
 
     <groupId>io.sunshower.environment</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.5.Final</version>
+    <version>1.0.10-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sunshower Parent Pom</name>
