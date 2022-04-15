@@ -88,7 +88,7 @@ jobs:
 
       - name: Deploy Bills-Of-Materials To Maven Central
         run: >-
-          mvn clean install verify deploy -f bom -P maven-central
+          mvn clean install verify deploy -P maven-central
           --settings settings/settings.xml
           -Dmaven-repo.github.username=${{secrets.MAVEN_CENTRAL_REPOSITORY_USERNAME}}
           -Dmaven-repo.github.password="${{secrets.MAVEN_CENTRAL_REPOSITORY_PASSWORD}}"
