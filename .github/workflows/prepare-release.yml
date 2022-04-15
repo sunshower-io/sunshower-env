@@ -88,11 +88,10 @@ jobs:
 
       - name: Deploy Bills-Of-Materials To Maven Central
         run: >-
-          mvn clean install verify deploy -P maven-central
+          mvn clean install verify deploy -Pmaven-central,-github
           --settings settings/settings.xml
           -Dmaven-repo.github.username=${{secrets.MAVEN_CENTRAL_REPOSITORY_USERNAME}}
           -Dmaven-repo.github.password="${{secrets.MAVEN_CENTRAL_REPOSITORY_PASSWORD}}"
-          -Durl="https://oss.sonatype.org/service/local/staging/deploy/maven2/"
           -e
           -DrepositoryId=maven-central-repo
           -Dgpg.keyname=${{ secrets.SIGNING_KEY_ID }}

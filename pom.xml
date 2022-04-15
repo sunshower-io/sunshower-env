@@ -56,10 +56,7 @@
         <profile>
             <id>github</id>
             <activation>
-                <property>
-                    <name>deployToGitHub</name>
-                    <value>true</value>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <distributionManagement>
                 <repository>
@@ -128,7 +125,7 @@
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>sign</goal>
                             </goals>
