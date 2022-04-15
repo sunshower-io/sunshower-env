@@ -14,13 +14,20 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Set up JDK 15
-      uses: actions/setup-java@v1
+    - name: Import GPG Key
+      uses: hashicorp/ghaction-import-gpg@v2.1.0
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.SIGNING_KEY }}
+        PASSPHRASE: ${{ secrets.SIGNING_PASSWORD }}
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
       with:
-        java-version: 15
+        java-version: 17
+        distribution: zulu
+
     - name: Install Parent POM
       run: >-
-        mvn install deploy -f parent/pom.xml
+        mvn install gpg:sign deploy -f parent/pom.xml
         --settings settings/settings.xml
         -Dmaven-repo.github.username=${{secrets.MAVEN_REPOSITORY_USERNAME}}
         -Dmaven-repo.github.password=${{secrets.MAVEN_REPOSITORY_PASSWORD}}
